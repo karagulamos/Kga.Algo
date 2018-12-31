@@ -1,7 +1,7 @@
 # Kga.Algo
 This project focuses on heavy duty data structures absent in .NET, and have been designed to be efficient and production ready. Contributions are welcome.
 
-The data structures included in this project solve a varying degree of problems highlighted below:
+Some of the data structures included in this project solve a varying degree of problems as highlighted below:
 
 ## Trie Data Structure
 
