@@ -16,7 +16,6 @@ Below is a description of Trie data structures in this project, which can be fou
 ## TrieMap Example
 
 ```dotnetcli
-...
 private static void Main()
 {
     var map = new TrieMap<string>
@@ -47,5 +46,4 @@ private static void Main()
 
     Console.ReadLine();
 }
-...
 ```
