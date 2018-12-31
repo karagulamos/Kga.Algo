@@ -47,3 +47,39 @@ private static void Main()
     Console.ReadLine();
 }
 ```
+
+## TrieSet Example
+
+```csharp
+private static void Main()
+{
+    string[] words = {
+        "hello","help","hell","hill","holla",
+        "hitler","bit","hate","heat","cold",
+        "cope","hole","haven", "hater", "bat",
+        "holder", "folded", "fail", "hail", "bella"
+    };
+
+    var set = new TrieSet(words);    
+    
+    const string tiger = "tiger";
+
+    if(!set.Contains(tiger)) // Throws ArgumentException without this
+        set.Add(tiger);
+        
+    set.Remove("hail");
+
+    Console.WriteLine("No. of nodes in tree: " + set.Size);
+    Console.WriteLine("No. of words in tree: " + set.KeyCount);
+    Console.WriteLine("No. of hits on tree: " + set.HitCount);
+
+    Console.WriteLine();
+
+    foreach (var result in set) // Or foreach(var result in set.Search(string.Empty))
+    {
+        Console.WriteLine(result);
+    }
+
+    Console.ReadLine();
+}
+```
