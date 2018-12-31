@@ -7,6 +7,14 @@ Some of the data structures included in this project solve a varying degree of p
 
 Tries are useful in scenarios where we require fast lookups and/or retrieval defined by some **prefix**. Also, retrieving these keys (and/or associated values where required) can be done efficiently in linear time of the nodes and edges in the trie.
 
+Tries boast of being space efficient due to their ability to represent individual characters as nodes in a tree-like structure.
+
+Consider the words **home, homly, hang, hanger**. There are 26 characters in total, but a trie only requires 12 character nodes to represent all of these words. 
+
+Furthermore, tries are much more memory efficient with data containing lots of duplicates as it needs only a uses few characters to represent them. As a result, lookups are very fast and can be done in O(N).
+
+A practical use of a trie is **autocompletion** search due to its ability to generate all keys in the tree in time proportional O(|nodes| + |edges).
+
 Below is a description of Trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
 1. **TrieMap** - A compressed tree of keys and their respective values. As the name suggests, it uses a Trie data structure that supports fast key/value lookups and efficient prefix search of all key entries within the collection.
