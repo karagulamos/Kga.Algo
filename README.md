@@ -7,7 +7,7 @@ The data structures included in this project solve a varying degree of problems 
 
 Tries are useful in scenarios where we require fast lookups and/or retrieval defined by some **prefix**. Also, retrieving these keys (and/or associated values where required) can be done efficiently in near linear time of the nodes and edges in the trie.
 
-Below is a description of Trie data structures in this project, which can be found under the **Kga.Algo.Trees.Trie** namespace.
+Below is a description of Trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
 1. **TrieMap** - A compressed tree of keys and their respective values. As the name suggests, it uses a Trie data structure that supports fast key/value lookups and efficient prefix search of all key entries within the collection.
 
