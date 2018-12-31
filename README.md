@@ -19,7 +19,7 @@ Below is a description of trie data structures in this project found under the *
 
 1. **TrieMap** - A compressed tree of keys and their respective values. As the name suggests, it uses a trie data structure that supports fast key/value lookups and efficient prefix search of all key entries within the collection.
 
-2. **TrieSet** - A compressed tree of keys and uses **TrieMap** under the covers.
+2. **TrieSet** - A compressed tree of keys that uses **TrieMap** under the covers.
 
 ## TrieMap Example
 
