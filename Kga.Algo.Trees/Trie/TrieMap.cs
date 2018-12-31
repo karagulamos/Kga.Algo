@@ -260,7 +260,6 @@ namespace Kga.Algo.Trees.Trie
             public bool IsWordEnd { get; private set; }
             public TValue Value { get; private set; }
 
-
             public void EndWord(bool flag = true) => IsWordEnd = flag;
             public bool HasChild(char key) => Children.ContainsKey(key);
             public void SetChild(char key) => Children[key] = new Node();
@@ -272,7 +271,6 @@ namespace Kga.Algo.Trees.Trie
 
             public void RemoveChild(char key) => Children.Remove(key);
             public void RemoveChildren() => Children.Clear();
-
 
             public void SetValue(TValue value) => Value = value;
 

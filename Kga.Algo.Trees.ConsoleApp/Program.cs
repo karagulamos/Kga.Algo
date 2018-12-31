@@ -8,16 +8,10 @@ namespace Kga.Algo.Trees.ConsoleApp
         private static void Main()
         {
             string[] words = {
-                "hello","help","hell","hill","holla",
-                "hitler","bit","hate","heat","cold",
-                "cope","hole","haven", "hater", "bat",
-                "holder", "folded", "fail", "hail", "bella"
+                "home", "homely", "hangs", "hanger", "have", "haven"
             };
 
             var set = new TrieSet(words);
-
-            set.Remove("hail");
-            set.Add("tiger");
 
             Console.WriteLine("No. of nodes in tree: " + set.Size);
             Console.WriteLine("No. of words in tree: " + set.KeyCount);
@@ -25,7 +19,7 @@ namespace Kga.Algo.Trees.ConsoleApp
 
             Console.WriteLine();
 
-            foreach (var result in set)
+            foreach (var result in set.Search("ha"))
             {
                 Console.WriteLine(result);
             }
@@ -53,7 +47,7 @@ namespace Kga.Algo.Trees.ConsoleApp
 
             Console.WriteLine();
 
-            foreach (var result in map.Search("b"))
+            foreach (var result in map)
             {
                 Console.WriteLine(result.Key + " - " + result.Value);
             }
