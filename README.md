@@ -9,7 +9,7 @@ Tries are useful in scenarios where we require fast lookups or retrieval defined
 
 Tries boast of being space efficient due to their ability to represent individual characters as nodes in a tree-like structure.
 
-Consider the words **home, homly, hangs, hanger, have, haven**. There are 30 characters in total, but a trie only requires 15 characters to represent all of these words. 
+Consider the words **home, homely, hangs, hanger, have, haven**. There are 30 characters in total, but a trie only requires 15 characters to represent all of these words. 
 
 Furthermore, tries are much more memory efficient when dealing with data that contain lots of duplicates as they only require few characters to represent them. As a result, key lookups are very fast and can be done in **O(M)**, where M is the length of the searched key.
 
@@ -62,20 +62,10 @@ private static void Main()
 private static void Main()
 {
     string[] words = {
-        "hello","help","hell","hill","holla",
-        "hitler","bit","hate","heat","cold",
-        "cope","hole","haven", "hater", "bat",
-        "holder", "folded", "fail", "hail", "bella"
+        "home", "homely", "hangs", "hanger", "have", "haven"
     };
 
-    var set = new TrieSet(words);    
-    
-    const string tiger = "tiger";
-
-    if(!set.Contains(tiger)) // Throws ArgumentException without this
-        set.Add(tiger);
-        
-    set.Remove("hail");
+    var set = new TrieSet(words);
 
     Console.WriteLine("No. of nodes in tree: " + set.Size);
     Console.WriteLine("No. of words in tree: " + set.KeyCount);
@@ -83,7 +73,7 @@ private static void Main()
 
     Console.WriteLine();
 
-    foreach (var result in set) // Or foreach(var result in set.Search(string.Empty))
+    foreach (var result in set.Search("ha")) // Or foreach(var result in set) for every key
     {
         Console.WriteLine(result);
     }
