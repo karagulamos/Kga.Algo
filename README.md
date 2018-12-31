@@ -15,7 +15,7 @@ Below is a description of Trie data structures in this project found under the *
 
 ## TrieMap Example
 
-```dotnetcli
+```csharp
 private static void Main()
 {
     var map = new TrieMap<string>
