@@ -15,9 +15,9 @@ Furthermore, tries are much more memory efficient when dealing with data that co
 
 A practical use of a trie is in **autocompletion** search due to its ability to generate all keys in the tree in time proportional **O(|N| + |E|)**, where N = # of nodes in the tree and E = # of edges or paths in the tree.
 
-Below is a description of Trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
+Below is a description of trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
-1. **TrieMap** - A compressed tree of keys and their respective values. As the name suggests, it uses a Trie data structure that supports fast key/value lookups and efficient prefix search of all key entries within the collection.
+1. **TrieMap** - A compressed tree of keys and their respective values. As the name suggests, it uses a trie data structure that supports fast key/value lookups and efficient prefix search of all key entries within the collection.
 
 2. **TrieSet** - A compressed tree of keys and uses **TrieMap** under the covers.
 
