@@ -13,7 +13,7 @@ Consider the words **home, homly, hang, hanger**. There are 26 characters in tot
 
 Furthermore, tries are much more memory efficient when dealing with data that contain lots of duplicates as it only a uses few characters to represent them. As a result, key lookups are very fast and can be done in **O(M)**, where M is the length of searched key.
 
-A practical use of a trie is in **autocompletion** search due to its ability to generate all keys in the tree in time proportional **O(|N| + |E|)**, where N = # of nodes in the tree and E = # of edges or paths in the tree.
+A practical use of a trie is in **autocompletion** search due to its ability to efficiently generate all keys in the tree in time proportional to **O(|N| + |E|)**, where N = # of nodes in the tree and E = # of edges or paths in the tree.
 
 Below is a description of trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
