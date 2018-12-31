@@ -5,7 +5,7 @@ Some of the data structures included in this project solve a varying degree of p
 
 ## Trie Data Structure
 
-Tries are useful in scenarios where we require fast lookups and/or retrieval defined by some **prefix**. Also, retrieving these keys (and/or associated values where required) can be done efficiently in near linear time of the nodes and edges in the trie.
+Tries are useful in scenarios where we require fast lookups and/or retrieval defined by some **prefix**. Also, retrieving these keys (and/or associated values where required) can be done efficiently in linear time of the nodes and edges in the trie.
 
 Below is a description of Trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
