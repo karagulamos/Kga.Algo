@@ -13,7 +13,7 @@ Consider the words **home, homly, hangs, hanger, have, haven**. There are 30 cha
 
 Furthermore, tries are much more memory efficient when dealing with data that contain lots of duplicates as they only require few characters to represent them. As a result, key lookups are very fast and can be done in **O(M)**, where M is the length of the searched key.
 
-A practical use of a trie is **autocompletion** (e.g. Google Search) due to its ability to efficiently generate all keys in the tree in time proportional to **O(|N| + |E|)**, where N = # of nodes in the tree and E = # of edges or paths in the tree.
+A practical use of a trie is **auto completion** (e.g. Google Search) due to its ability to efficiently generate all keys defined by a user supplied prefix in time proportional to **O(|N| + |E|)**, where N = # of character nodes in the tree and E = # of edges or paths between nodes.
 
 Below is a description of trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
