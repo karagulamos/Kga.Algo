@@ -9,9 +9,9 @@ Tries are useful in scenarios where we require fast lookups or retrieval defined
 
 Tries boast of being space efficient due to their ability to represent individual characters as nodes in a tree-like structure.
 
-Consider the words **home, homly, hangs, hanger, have, haven**. There are 30 characters in total, but a trie only requires 15 character nodes to represent all of these words. 
+Consider the words **home, homly, hangs, hanger, have, haven**. There are 30 characters in total, but a trie only requires 15 characters to represent all of these words. 
 
-Furthermore, tries are much more memory efficient when dealing with data that contain lots of duplicates as it only a uses few characters to represent them. As a result, key lookups are very fast and can be done in **O(M)**, where M is the length of searched key.
+Furthermore, tries are much more memory efficient when dealing with data that contain lots of duplicates as it only a uses few characters to represent them. As a result, key lookups are very fast and can be done in **O(M)**, where M is the length of the searched key.
 
 A practical use of a trie is in **autocompletion** search due to its ability to efficiently generate all keys in the tree in time proportional to **O(|N| + |E|)**, where N = # of nodes in the tree and E = # of edges or paths in the tree.
 
