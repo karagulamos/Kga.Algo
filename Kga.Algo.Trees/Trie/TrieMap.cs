@@ -98,12 +98,15 @@ namespace Kga.Algo.Trees.Trie
         private void Remove(Node root, string word)
         {
             var currentNode = root;
+
             var states = new Stack<NodeState>(word.Length);
 
             foreach (var key in word)
             {
                 if (!currentNode.HasChild(key)) Throw.KeyNotExist(word);
+
                 states.Push(new NodeState(currentNode, key));
+
                 currentNode = currentNode.GetChild(key);
             }
 
