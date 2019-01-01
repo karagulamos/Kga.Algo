@@ -7,9 +7,3 @@
 /**/bin/
 /**/obj/
 _site
-api
-articles
-docfx.json
-index.md
-log.txt
-toc.yml

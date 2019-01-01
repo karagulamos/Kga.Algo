@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Kga.Algo.Trees.Trie
@@ -96,42 +97,37 @@ namespace Kga.Algo.Trees.Trie
 
         private void Remove(Node root, string word)
         {
-            var states = new Stack<NodeState>();
             var currentNode = root;
+            var states = new Stack<NodeState>(word.Length);
 
-            foreach (var c in word)
+            foreach (var key in word)
             {
-                if (!currentNode.HasChild(c)) Throw.KeyNotExist(word);
-
-                var n = currentNode.GetChild(c).Count();
-
-                states.Push(new NodeState { ParentNode = currentNode, ChildKey = c, ChildCount = n });
-                currentNode = currentNode.GetChild(c);
+                if (!currentNode.HasChild(key)) Throw.KeyNotExist(word);
+                states.Push(new NodeState(currentNode, key));
+                currentNode = currentNode.GetChild(key);
             }
 
             if (!currentNode.IsWordEnd) Throw.KeyNotExist(word);
 
-            KeyCount--;
-            HitCount -= word.Length;
-
             currentNode.EndWord(false);
 
-            if (currentNode.HasChildren()) return;
-
-            Size--;
-
-            foreach (var state in states)
+            do
             {
-                var node = state.ParentNode;
+                var state = states.Pop();
 
-                if (node.IsWordEnd && node.HasOneChild() || state.ChildCount > 1) break;
+                var childNode = state.Parent.GetChild(state.ChildKey);
 
-                if (!node.HasChild(state.ChildKey))
-                    continue;
+                if (childNode.HasChildren()) break;
 
-                node.RemoveChild(state.ChildKey);
+                state.Parent.RemoveChild(state.ChildKey);
+
                 Size--;
+                currentNode = state.Parent;
             }
+            while (states.Count > 0 && !currentNode.IsWordEnd);
+
+            KeyCount--;
+            HitCount -= word.Length;
         }
 
         /// <summary>
@@ -198,7 +194,7 @@ namespace Kga.Algo.Trees.Trie
         /// <remarks>Complexity: O(1)</remarks>
         public void Clear()
         {
-            _root.RemoveChildren();
+            _root.Children.Clear();
             KeyCount = HitCount = Size = 0;
         }
 
@@ -241,14 +237,19 @@ namespace Kga.Algo.Trees.Trie
             return theNode;
         }
 
-        private struct NodeState
+        internal class NodeState
         {
-            public Node ParentNode { get; set; }
-            public char ChildKey { get; set; }
-            public int ChildCount { get; set; }
+            public NodeState(Node parentNode, char childKey)
+            {
+                Parent = parentNode;
+                ChildKey = childKey;
+            }
+
+            public Node Parent { get; }
+            public char ChildKey { get; }
         }
 
-        private class Node
+        internal class Node
         {
             public Node()
             {
@@ -257,22 +258,18 @@ namespace Kga.Algo.Trees.Trie
             }
 
             public Dictionary<char, Node> Children { get; }
-            public bool IsWordEnd { get; private set; }
-            public TValue Value { get; private set; }
 
+            public TValue Value { get; private set; }
+            public void SetValue(TValue value) => Value = value;
+
+            public bool IsWordEnd { get; private set; }
             public void EndWord(bool flag = true) => IsWordEnd = flag;
+
             public bool HasChild(char key) => Children.ContainsKey(key);
             public void SetChild(char key) => Children[key] = new Node();
             public Node GetChild(char key) => Children[key];
-
-            public int Count() => Children.Count;
-            public bool HasChildren() => Count() > 0;
-            public bool HasOneChild() => Count() == 1;
-
+            public bool HasChildren() => Children.Any();
             public void RemoveChild(char key) => Children.Remove(key);
-            public void RemoveChildren() => Children.Clear();
-
-            public void SetValue(TValue value) => Value = value;
 
             private struct CharComparer : IEqualityComparer<char>
             {

@@ -259,3 +259,13 @@ paket-files/
 # Python Tools for Visual Studio (PTVS)
 __pycache__/
 *.pyc
+/Kga.Algo.Trees/apidoc
+/Kga.Algo.Trees/articles
+/Kga.Algo.Trees/images
+/Kga.Algo.Trees/src
+/Kga.Algo.Trees/index.md
+/Kga.Algo.Trees/log.txt
+/Kga.Algo.Trees/toc.yml
+/Kga.Algo.Trees/docfx.json
+/Kga.Algo.Trees/api
+/Kga.Algo.Trees/articles
