@@ -93,41 +93,39 @@ namespace Kga.Algo.Trees.Trie
         /// <exception cref="ArgumentException">The key does not exist in the <see cref="TrieMap{TValue}"/>.</exception>
         /// <exception cref="NullReferenceException">The supplied key is null.</exception> 
         /// <remarks>Complexity: O(|characters in key|)</remarks>
-        public void Remove(string key) => Remove(_root, key);
+        public void Remove(string key) => Remove(key, _root);
 
-        private void Remove(Node root, string word)
+        private void Remove(string word, Node curentNode)
         {
-            var currentNode = root;
-
             var states = new Stack<NodeState>(word.Length);
 
             foreach (var key in word)
             {
-                if (!currentNode.HasChild(key)) Throw.KeyNotExist(word);
+                if (!curentNode.HasChild(key)) Throw.KeyNotExist(word);
 
-                states.Push(new NodeState(currentNode, key));
+                states.Push(new NodeState(curentNode, key));
 
-                currentNode = currentNode.GetChild(key);
+                curentNode = curentNode.GetChild(key);
             }
 
-            if (!currentNode.IsWordEnd) Throw.KeyNotExist(word);
+            if (!curentNode.IsWordEnd) Throw.KeyNotExist(word);
 
-            currentNode.EndWord(false);
+            curentNode.EndWord(false);
 
             do
             {
                 var state = states.Pop();
 
-                var childNode = state.Parent.GetChild(state.ChildKey);
+                curentNode = state.Parent;
+
+                var childNode = curentNode.GetChild(state.ChildKey);
 
                 if (childNode.HasChildren()) break;
 
-                state.Parent.RemoveChild(state.ChildKey);
-
+                curentNode.RemoveChild(state.ChildKey);
                 Size--;
-                currentNode = state.Parent;
             }
-            while (states.Count > 0 && !currentNode.IsWordEnd);
+            while (states.Count > 0 && !curentNode.IsWordEnd);
 
             KeyCount--;
             HitCount -= word.Length;
