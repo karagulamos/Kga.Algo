@@ -165,13 +165,20 @@ namespace Kga.Algo.Trees.Trie
 
         private static bool ContainsValue(Node node, TValue value)
         {
-            foreach (var currentNode in node.Children.Values)
+            var queue = new Queue<Node>(new[] { node });
+
+            while (queue.Count > 0)
             {
-                if (ContainsValue(currentNode, value))
+                var nextNode = queue.Dequeue();
+
+                if (nextNode.IsWordEnd && nextNode.Value.Equals(value))
                     return true;
+
+                foreach (var currentNode in nextNode.Children.Values)
+                    queue.Enqueue(currentNode);
             }
 
-            return node.IsWordEnd && node.Value.Equals(value);
+            return false;
         }
 
         /// <summary>
