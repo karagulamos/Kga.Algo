@@ -95,37 +95,37 @@ namespace Kga.Algo.Trees.Trie
         /// <remarks>Complexity: O(|characters in key|)</remarks>
         public void Remove(string key) => Remove(key, _root);
 
-        private void Remove(string word, Node curentNode)
+        private void Remove(string word, Node parent)
         {
             var states = new Stack<NodeState>(word.Length);
 
             foreach (var key in word)
             {
-                if (!curentNode.HasChild(key)) Throw.KeyNotExist(word);
+                if (!parent.HasChild(key)) Throw.KeyNotExist(word);
 
-                states.Push(new NodeState(curentNode, key));
+                states.Push(new NodeState(parent, key));
 
-                curentNode = curentNode.GetChild(key);
+                parent = parent.GetChild(key);
             }
 
-            if (!curentNode.IsWordEnd) Throw.KeyNotExist(word);
+            if (!parent.IsWordEnd) Throw.KeyNotExist(word);
 
-            curentNode.EndWord(false);
+            parent.EndWord(false);
 
             do
             {
                 var state = states.Pop();
 
-                curentNode = state.Parent;
+                parent = state.Parent;
 
-                var childNode = curentNode.GetChild(state.ChildKey);
+                var childNode = parent.GetChild(state.ChildKey);
 
                 if (childNode.HasChildren()) break;
 
-                curentNode.RemoveChild(state.ChildKey);
+                parent.RemoveChild(state.ChildKey);
                 Size--;
             }
-            while (states.Count > 0 && !curentNode.IsWordEnd);
+            while (states.Count > 0 && !parent.IsWordEnd);
 
             KeyCount--;
             HitCount -= word.Length;
@@ -152,8 +152,8 @@ namespace Kga.Algo.Trees.Trie
         /// <remarks>Complexity: O(|characters in key|)</remarks>
         public bool ContainsKey(string key)
         {
-            var theNode = FindTerminalNodeFor(key);
-            return theNode.IsWordEnd;
+            var foundNode = FindTerminalNodeFor(key);
+            return foundNode.IsWordEnd;
         }
 
         /// <summary>
@@ -163,19 +163,19 @@ namespace Kga.Algo.Trees.Trie
         /// <remarks>Complexity: O(|nodes| + |descendant paths|)</remarks>
         public bool ContainsValue(TValue value) => ContainsValue(_root, value);
 
-        private static bool ContainsValue(Node node, TValue value)
+        private static bool ContainsValue(Node root, TValue value)
         {
-            var queue = new Queue<Node>(new[] { node });
+            var queue = new Queue<Node>(new[] { root });
 
             while (queue.Count > 0)
             {
-                var nextNode = queue.Dequeue();
+                var currentNode = queue.Dequeue();
 
-                if (nextNode.IsWordEnd && nextNode.Value.Equals(value))
+                if (currentNode.IsWordEnd && currentNode.Value.Equals(value))
                     return true;
 
-                foreach (var currentNode in nextNode.Children.Values)
-                    queue.Enqueue(currentNode);
+                foreach (var nextNode in currentNode.Children.Values)
+                    queue.Enqueue(nextNode);
             }
 
             return false;
