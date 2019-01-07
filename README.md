@@ -15,7 +15,7 @@ Furthermore, tries are much more memory efficient when dealing with data that co
 
 A practical use of a trie is **auto completion** (e.g. Google Search) due to its ability to efficiently generate all keys defined by a user supplied prefix in time proportional to **O(|N| + |E|)**, where N = # of character nodes in the tree and E = # of edges or paths between nodes.
 
-Another efficient use of a trie is **spell checking** used in most applications to suggest corrections to users.
+Another efficient use of a trie is **spell checking**, which is used in most applications to suggest corrections to users.
 
 Below is a description of trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
