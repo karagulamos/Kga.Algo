@@ -52,8 +52,37 @@ namespace Kga.Algo.Trees.ConsoleApp
                 Console.WriteLine(result.Key + " - " + result.Value);
             }
 
+            Console.WriteLine();
+
+            string[] temp =
+            {
+                "your", "luck", "start", "starts", "lucky",
+                "day", "it", "is", "day", "today", "you", "are", "brown",
+                "friend", "frisby"
+            };
+
+            var dictionary = new TrieSet(temp);
+
+            const string sentence = "This is yor lucky brwon dy frind.";
+
+            Console.WriteLine("Sentence: {0}\n", sentence);
+
+            foreach (var word in sentence.Split(new[] { ' ', '.' }))
+            {
+                if (string.IsNullOrEmpty(word) || dictionary.Contains(word))
+                    continue;
+
+                Console.Write("Suggestions for '{0}': ", word);
+
+                foreach (var suggestion in dictionary.Suggest(word))
+                {
+                    Console.Write(suggestion + " ");
+                }
+
+                Console.WriteLine();
+            }
+
             Console.ReadLine();
         }
     }
-
 }

@@ -83,19 +83,41 @@ namespace Kga.Algo.UnitTests
         {
             const string prefix = "flow";
 
-            var originalKeys = _items.Where(s => s.StartsWith(prefix)).ToArray();
+            var keysToMatch = _items.Where(s => s.StartsWith(prefix)).ToArray();
 
             var allKeys = _trie.Search(string.Empty).Select(s => s.Key).ToArray();
             var matchedKeys = _trie.Search(prefix).Select(s => s.Key).ToArray();
             var noMatch = _trie.Search("no match").Select(s => s.Key).ToArray();
 
             Assert.IsTrue(_items.All(k => allKeys.Contains(k)));
-            Assert.AreEqual(_items.Length, allKeys.Count());
+            Assert.AreEqual(_items.Length, allKeys.Length);
 
-            Assert.IsTrue(originalKeys.All(k => matchedKeys.Contains(k)));
-            Assert.AreEqual(originalKeys.Length, matchedKeys.Count());
+            Assert.IsTrue(keysToMatch.All(k => matchedKeys.Contains(k)));
+            Assert.AreEqual(keysToMatch.Length, matchedKeys.Length);
 
             Assert.AreEqual(noMatch.Length, 0);
+        }
+
+        [TestMethod]
+        public void Return_ValidSuggestions_For_Pattern()
+        {
+            const string wrongPattern = "flw";
+            const string validPattern = "flow";
+
+            const string unmatchedPattern = "";
+
+            var wrongPatternSuggestions = _trie.Suggest(wrongPattern).Select(p => p.Value).ToArray();
+            var validPatternSuggestions = _trie.Suggest(validPattern).Select(p => p.Value).ToArray();
+
+            var suggestedDifference = wrongPatternSuggestions.Except(validPatternSuggestions);
+
+            var unmatchedPatternSuggestions = _trie.Suggest(unmatchedPattern);
+
+            Assert.AreEqual(validPatternSuggestions.Length, wrongPatternSuggestions.Length);
+
+            Assert.IsFalse(suggestedDifference.Any());
+
+            Assert.IsFalse(unmatchedPatternSuggestions.Any());
         }
 
         [TestMethod]

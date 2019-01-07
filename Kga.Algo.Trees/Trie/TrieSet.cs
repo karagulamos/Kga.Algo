@@ -27,12 +27,23 @@ namespace Kga.Algo.Trees.Trie
         /// </summary>
         /// <param name="keys">A collection of supplied keys.</param>
         /// <exception cref="NullReferenceException">At least one of the supplied keys is null.</exception>
+        /// <remarks>Duplicate keys are ignored</remarks>
         public TrieSet(IEnumerable<string> keys) : this()
         {
             foreach (var word in keys)
-            {
-                if (!Contains(word)) Add(word);
-            }
+                Add(word);
+        }
+
+        /// <summary>
+        /// Gets entries in the <see cref="TrieSet"/> that match the first valid sub prefix.
+        /// </summary>
+        /// <param name="pattern">Prefix to search for in the <see cref="TrieSet"/>.</param>
+        /// <returns>A collection of keys in the <see cref="TrieSet"/>.</returns>
+        /// <exception cref="NullReferenceException">The supplied prefix is null.</exception> 
+        /// <remarks>Complexity: O(|nodes from prefix| + |descendant paths|)</remarks>
+        public IEnumerable<string> Suggest(string pattern)
+        {
+            return _trie.Suggest(pattern).Select(r => r.Key);
         }
 
         /// <summary>
@@ -54,7 +65,7 @@ namespace Kga.Algo.Trees.Trie
         /// <exception cref="ArgumentException">The key exists in the <see cref="TrieSet"/>.</exception>
         /// <exception cref="NullReferenceException">The supplied key is null.</exception>
         /// <remarks>Complexity: O(|characters in key|)</remarks>
-        public void Add(string key) => _trie.Add(key, default(object));
+        public void Add(string key) => _trie.AddInternal(key, default(object));
 
         /// <summary>
         /// Deletes entries matching the key from the <see cref="TrieSet"/>.
@@ -105,9 +116,6 @@ namespace Kga.Algo.Trees.Trie
             return Search(string.Empty).GetEnumerator();
         }
 
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
-        }
+        IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
     }
 }

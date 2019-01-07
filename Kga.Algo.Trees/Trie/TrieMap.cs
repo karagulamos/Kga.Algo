@@ -24,6 +24,32 @@ namespace Kga.Algo.Trees.Trie
         }
 
         /// <summary>
+        /// Gets entries in the <see cref="TrieMap{TValue}"/> that match the first valid sub prefix.
+        /// </summary>
+        /// <param name="pattern">Pattern to search for in the <see cref="TrieMap{TValue}"/>.</param>
+        /// <returns>A collection of <see cref="TrieResult{TValue}"/>.</returns>
+        /// <exception cref="NullReferenceException">The supplied key is null.</exception> 
+        /// <remarks>Complexity: O(|nodes from prefix| + |descendant paths|)</remarks>
+        public IEnumerable<TrieResult<TValue>> Suggest(string pattern)
+        {
+            var currentNode = _root;
+            var prefix = new StringBuilder();
+
+            foreach (var c in pattern)
+            {
+                if (!currentNode.HasChild(c)) break;
+
+                prefix.Append(c);
+                currentNode = currentNode.GetChild(c);
+            }
+
+            if (currentNode == _root)
+                return Enumerable.Empty<TrieResult<TValue>>();
+
+            return Search(currentNode, prefix);
+        }
+
+        /// <summary>
         /// Gets all entries in the <see cref="TrieMap{TValue}"/> whose keys have the supplied prefix.
         /// </summary>
         /// <param name="prefix">Prefix to search for in the <see cref="TrieMap{TValue}"/>.</param>
@@ -62,6 +88,12 @@ namespace Kga.Algo.Trees.Trie
         /// <remarks>Complexity: O(|characters in key|)</remarks>
         public void Add(string key, TValue value)
         {
+            if (!AddInternal(key, value))
+                Throw.KeyAlreadyAdded(key);
+        }
+
+        internal bool AddInternal(string key, TValue value)
+        {
             var prevSize = Size;
             var currentNode = _root;
 
@@ -76,7 +108,7 @@ namespace Kga.Algo.Trees.Trie
                 currentNode = currentNode.GetChild(c);
             }
 
-            if (currentNode.IsWordEnd) Throw.KeyAlreadyAdded(key);
+            if (currentNode.IsWordEnd) return false;
 
             KeyCount++;
             HitCount += key.Length;
@@ -84,6 +116,8 @@ namespace Kga.Algo.Trees.Trie
 
             currentNode.SetValue(value);
             currentNode.EndWord();
+
+            return true;
         }
 
         /// <summary>
