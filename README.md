@@ -15,11 +15,75 @@ Furthermore, tries are much more memory efficient when dealing with data that co
 
 A practical use of a trie is **auto completion** (e.g. Google Search) due to its ability to efficiently generate all keys defined by a user supplied prefix in time proportional to **O(|N| + |E|)**, where N = # of character nodes in the tree and E = # of edges or paths between nodes.
 
+Another efficient use of a trie is **spell checking**, which is used in most applications to suggest corrections to users.
+
 Below is a description of trie data structures in this project found under the **Kga.Algo.Trees.Trie** namespace.
 
 1. **TrieMap** - A compressed tree of keys and their respective values. As the name suggests, it uses a trie data structure that supports fast key/value lookups and efficient prefix search of all key entries within the collection.
 
 2. **TrieSet** - A compressed tree of keys that uses **TrieMap** under the covers.
+
+## TrieSet Example (Auto Completion)
+
+```csharp
+private static void Main()
+{
+    string[] words = {
+        "home", "homely", "hangs", "hanger", "have", "haven"
+    };
+
+    var set = new TrieSet(words);
+
+    Console.WriteLine("No. of nodes in tree: " + set.Size);
+    Console.WriteLine("No. of words in tree: " + set.KeyCount);
+    Console.WriteLine("No. of hits on tree: " + set.HitCount);
+
+    Console.WriteLine();
+
+    foreach (var result in set.Search("ha")) // Or foreach(var result in set) for every key
+    {
+        Console.WriteLine(result);
+    }
+
+    Console.ReadLine();
+}
+```
+## TrieSet Example (Spelling Checker)
+
+```csharp
+private static void Main()
+{
+    string[] words =
+    {
+        "your", "luck", "start", "starts", "lucky",
+        "day", "it", "is", "day", "today", "you", "are", "brown",
+        "friend", "frisby"
+    };
+
+    var dictionary = new TrieSet(words);
+
+    const string sentence = "This is yor lucky brwon dy frind.";
+
+    Console.WriteLine("Sentence: {0}\n", sentence);
+
+    foreach (var word in sentence.Split(new[] { ' ', '.' }))
+    {
+        if (string.IsNullOrEmpty(word) || dictionary.Contains(word))
+            continue;
+
+        Console.Write("Suggestions for '{0}': ", word);
+
+        foreach (var suggestion in dictionary.Suggest(word))
+        {
+            Console.Write(suggestion + " ");
+        }
+
+        Console.WriteLine();
+    }
+
+    Console.ReadLine();
+}
+```
 
 ## TrieMap Example
 
@@ -56,28 +120,3 @@ private static void Main()
 }
 ```
 
-## TrieSet Example
-
-```csharp
-private static void Main()
-{
-    string[] words = {
-        "home", "homely", "hangs", "hanger", "have", "haven"
-    };
-
-    var set = new TrieSet(words);
-
-    Console.WriteLine("No. of nodes in tree: " + set.Size);
-    Console.WriteLine("No. of words in tree: " + set.KeyCount);
-    Console.WriteLine("No. of hits on tree: " + set.HitCount);
-
-    Console.WriteLine();
-
-    foreach (var result in set.Search("ha")) // Or foreach(var result in set) for every key
-    {
-        Console.WriteLine(result);
-    }
-
-    Console.ReadLine();
-}
-```
