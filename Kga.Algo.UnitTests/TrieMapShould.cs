@@ -75,7 +75,6 @@ namespace Kga.Algo.UnitTests
             Assert.ThrowsException<ArgumentException>(() => _trie.Remove("unknown1"));
             Assert.ThrowsException<ArgumentException>(() => _trie["unknown2"] = "");
             Assert.ThrowsException<ArgumentException>(() => _ = _trie["unknown3"]);
-
         }
 
         [TestMethod]
@@ -103,7 +102,6 @@ namespace Kga.Algo.UnitTests
         {
             const string wrongPattern = "flw";
             const string validPattern = "flow";
-
             const string unmatchedPattern = "";
 
             var wrongPatternSuggestions = _trie.Suggest(wrongPattern).Select(p => p.Value).ToArray();
@@ -114,9 +112,7 @@ namespace Kga.Algo.UnitTests
             var unmatchedPatternSuggestions = _trie.Suggest(unmatchedPattern);
 
             Assert.AreEqual(validPatternSuggestions.Length, wrongPatternSuggestions.Length);
-
             Assert.IsFalse(suggestedDifference.Any());
-
             Assert.IsFalse(unmatchedPatternSuggestions.Any());
         }
 
